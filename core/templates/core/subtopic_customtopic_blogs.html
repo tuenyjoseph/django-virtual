@@ -1,0 +1,93 @@
+{% extends 'core/basetemp.html' %}
+{% load staticfiles %}
+{% block static %}
+  <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block search %}
+<div class="row mt-4">
+  <div class="col-md-12">
+    <h4 class="text-center" style="color: #808080;"><a href="{% url 'core:subtopic_blogs' subtopic.slug %}" class="btn btn-primary btn-sm btn-test float-left"><i class="fa fa-arrow-left" style="font-size:20px;"></i></a></h4>
+  </div>
+</div>
+<div class="row" style="">
+     <div class="col-md-2"></div>
+     <div class="col-md-8" style="margin-top: 10px;">
+       <div class="input-group" id="search-id" search-url-id="{% url 'core:search_blogs' %}">
+         <input type="text" id="search-res" class="form-control" placeholder="">
+         <span class="input-group-btn">
+           <button type="button" id="search-btn" style="font-size:24px;"><i class="fa fa-search" style="color: grey;"></i></button>
+         </span>
+       </div>
+       <div style="display: none;">
+         <form type="get" action="{% url 'core:search_blogs' %}"  style="margin: 0">
+          <input type="text" id="search-box" class="form-control" name="search-box" placeholder="">
+            <button type="submit" id="search-submit" style="font-size:24px;"><i class="fa fa-search" style="color: #488AC7;"></i></button>
+         </form>
+       </div>
+     </div>
+     <div class="col-md-2"></div>
+</div>
+{% endblock %}
+{% block body1 %}
+<div id="append-search"></div>
+<div class="jumbotron jumbotron-fluid" style="margin-top: 20px;">
+  <div class="container">
+    <h1 class="display-4">{{ topic.name}}</h1>
+    <p class="lead">{{ topic.description }}</p>
+  </div>
+</div>
+<div class="row" style="min-height: 600px;">
+  <div class="col-md-12">
+   <div class="card-columns">
+        {% for obj in titles %}
+        <div class="card hover" style="padding: 20px; margin-top: 5px; margin-bottom: 5px;">
+          <a href="{% url 'core:display' obj.user.slug obj.slug %}" style="color: #808080; text-decoration:none;">
+            <div class="card-body text-center">
+              {% if obj.first_image %}
+              <div style="background-image: url({{ obj.first_image.cover.url }}); min-height: 100px;">
+                <h5 class="card-title" style="padding-top: 20px; color: {{ obj.titlesprop.title_color }}; font-family: {{ obj.titlesprop.title_font }}">{{ obj.title }}</h5>
+              </div>
+              {% else %}
+              <div style="min-height: 100px; background-color: {{ obj.titlesprop.cover_color }};">
+                <h5 class="card-title" style="padding-top: 20px; color: {{ obj.titlesprop.title_color }}; font-family: {{ obj.titlesprop.title_font }}">{{ obj.title }}</h5>
+              </div>
+              {% endif %}
+              <p class="card-text" style="text-align: justify-all; color: black; font-family: 'Assistant', sans-serif;"><font size="3">{{ obj.description }}</font></p>
+              <p class="card-text" style="color: #808080;"><small class="text-muted text-center"> ~<img class="rounded-circle" src="{{ obj.user.profile.image.url }}" style="width: 15px;">{{ obj.user.get_full_name }}</small></p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+   </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+      $('#search-btn').on('click', function(event){
+        event.preventDefault();
+        var search = $('#search-res').val();
+        if (search != '') {
+          $('#search-box').val(search);
+          $('#search-submit').click();
+        }
+      })
+</script>
+<script type="text/javascript">
+       $('.add_subtopic').on('click', function(event){
+        event.preventDefault();
+        var form = $(this).closest('div');
+        var slug = $(this).attr("slug");
+        jsonData = {slug : slug}
+        $.ajax({
+          url: form.attr("view-function-link"),
+          type: "POST",
+          data: jsonData,
+          dataType: "json",
+          success: function(data){
+             $('#subtopic_id').hide();
+          }
+        })
+       })
+</script>
+{% endblock %}

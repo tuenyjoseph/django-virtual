@@ -1,0 +1,39 @@
+{% load static %}
+     <div class="row">
+       <div class="col-md-12">
+         <form enctype="multipart/form-data" action="" method="Post" class="text-center" id="formUpload">
+              {% csrf_token %}
+              {{ form }}
+              <input id="cover-submit" type="submit" name="upload" value="Next" class="btn btn-primary btn-sm btn-test">
+         </form>
+       </div>
+     </div>
+     <div class="modal fade" id="modalCrop">
+       <div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+             <h4 class="modal-title">Crop the image</h4>
+           </div>
+           <div class="modal-body">
+             <img src="" id="image" style="max-width: 100%;">
+           </div>
+           <div class="modal-footer">
+             <div class="btn-group pull-left" role="group">
+               <button type="button" class="btn btn-default js-zoom-in">
+                 <span class="glyphicon glyphicon-zoom-in"></span>
+               </button>
+               <button type="button" class="btn btn-default js-zoom-out">
+                 <span class="glyphicon glyphicon-zoom-out"></span>
+               </button>
+             </div>
+             <button type="button" class="btn btn-primary btn-test btn-sm" data-dismiss="modal">Nevermind</button>
+             <button type="button" class="btn btn-primary btn-test btn-sm js-crop-and-upload">Crop Image</button>
+           </div>
+         </div>
+       </div>
+     </div>
+
+

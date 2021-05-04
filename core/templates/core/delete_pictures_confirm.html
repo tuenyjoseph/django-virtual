@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+{% block body1 %}
+      <div class="row">
+          <div class="col-md-12 text-center mt-4">
+              <p>Are you sure you want to delete</p>
+              <a href="{% url 'core:delete_pictures' args order %}" class="btn btn-primary btn-sm btn-test">Ok</a>
+              <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary btn-sm btn-test">Cancel</a>
+          </div>
+      </div>
+{% endblock %}

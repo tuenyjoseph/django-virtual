@@ -1,0 +1,18 @@
+{% extends 'core/core.html' %}
+{% block body %}
+  <div style="min-height: 700px;">
+   <form method="post" class="mt-4 text-center">
+      {% csrf_token %}
+      {% for field in form %}
+      <small><p>
+          {{ field.label_tag }}
+          {{ field }}
+          {% for error in field.errors %}
+             <p style="color: red;">{{ error }}</p>
+          {% endfor %}
+      </p></small>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary btn-sm btn-test">Save Changes</button>
+   </form>
+  </div>
+{% endblock %}

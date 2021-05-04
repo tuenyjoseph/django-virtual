@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12" remove-customtopic-url="{% url 'core:titles_from_customtopic' title.pk topic %}">
+        <a href="" class="remove_title"><i class="material-icons">remove_circle</i></a>
+        <a href="{% url 'core:myblogdisplay' title.pk %}" class="btn btn-link">{{ title.title }}</a>
+        {% if not title.is_published %}
+        <a href="{% url 'core:blogpost' title.pk %}" style="text-decoration: none;"><small style="color: red; text-decoration: none;">This blog is not published. Please edit and publish</small></a>
+        {% endif %}
+    </div>
+</div>
+<script type="text/javascript">
+  $('.remove_title').on('click', function(event){
+    event.preventDefault();
+    console.log('start');
+    var div = $(this).closest("div");
+    var row = $(this).closest(".row");
+    row.remove();
+    $.ajax({
+      url : div.attr("remove-customtopic-url"),
+      type : "GET",
+      success : function(data) {
+        var app = $("#remove-ctopic");
+        app.append(data.html_form);
+        row.remove();
+      }
+    })
+  });
+</script>

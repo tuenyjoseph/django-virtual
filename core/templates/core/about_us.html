@@ -1,0 +1,16 @@
+{% extends 'core/bottomtemp.html' %}
+{% load staticfiles %}
+{% block static %}
+ <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body1 %}
+{% for writer in writers %}
+<div class="row">
+    <div class="col-md-12 text-center mt-4">
+        <a href="{% url 'core:profile' writer.slug %}" class="btn btn-link" style="color: #488AC7; font-family: Georgia, serif; text-decoration: none;"><h3 class="text-center">{{ writer.get_full_name | upper }}</h3></a><br>
+        <img src="{{ writer.profile.image.url }}" class="img-responsive" style="width: 30%;">
+        <p>{{ writer.profile.bio }}</p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

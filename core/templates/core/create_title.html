@@ -1,0 +1,17 @@
+{% extends 'core/core.html' %}
+{% block body %}
+     <p class="text-center">Add a title and a topic to your blog</p>
+     <div class="row" style="min-height: 700px;">
+       <div class="col-md-12 text-center">
+         <form enctype="multipart/form-data" action="" method="Post" class="" id="formUpload">
+              {% csrf_token %}
+              {{ form.media }}
+              {{ form.as_p }}
+            <input type="submit" name="upload" value="Add Content" class="btn btn-primary btn-sm btn-test">
+            <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary btn-sm btn-test">Cancel</a>
+         </form>
+       </div>
+     </div>
+{% endblock %}
+
+

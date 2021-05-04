@@ -1,0 +1,37 @@
+{% extends 'core/basetemp.html' %}
+{% load staticfiles %}
+{% block static %}
+  <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body1 %}
+<div class="row mt-4">
+  <div class="col-md-12">
+    <h4 class="text-center" style="color: #808080;"><a href="{% url 'core:blogs' slug %}" class="btn btn-primary btn-sm btn-test float-left"><i class="fa fa-arrow-left" style="font-size:20px;"></i></a>{{ year }}-{{ month }}</h4>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-md-12" style="min-height: 650px;">
+   <div class="card-columns">
+        {% for obj in blogs %}
+        <div class="card hover" style="padding: 20px; margin-top: 5px; margin-bottom: 5px;">
+          <a href="{% url 'core:display' obj.user.slug obj.slug %}" style="color: #808080; text-decoration:none;">
+            <div class="card-body text-center">
+              {% if obj.first_image %}
+              <div style="background-image: url({{ obj.first_image.cover.url }}); min-height: 100px;">
+                <h5 class="card-title" style="padding-top: 20px; color: {{ obj.titlesprop.title_color }}; font-family: {{ obj.titlesprop.title_font }}">{{ obj.title }}</h5>
+              </div>
+              {% else %}
+              <div style="min-height: 100px; background-color: {{ obj.titlesprop.cover_color }};">
+                <h5 class="card-title" style="padding-top: 20px; color: {{ obj.titlesprop.title_color }}; font-family: {{ obj.titlesprop.title_font }}">{{ obj.title }}</h5>
+              </div>
+              {% endif %}
+              <p class="card-text" style="text-align: justify-all; color: black; font-family: 'Assistant', sans-serif;"><font size="3">{{ obj.description }}</font></p>
+              <p class="card-text" style="color: #808080;"><small class="text-muted text-center"> ~<img class="rounded-circle" src="{{ obj.user.profile.image.url }}" style="width: 15px;">{{ obj.user.get_full_name }}</small></p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+   </div>
+  </div>
+</div>
+{% endblock %}

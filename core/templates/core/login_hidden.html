@@ -1,0 +1,7 @@
+<form id="login_hidden" name="login_hidden" method="post" action="">
+    {% csrf_token %}
+    {% for field in form %}
+    {{ field.as_hidden }}
+    {% endfor %}
+  <input hidden type="submit" name="login" value="Sign In" class=" btn btn-primary mt-2 btn-test text-center" style="padding-left: 5px;padding-right: 5px; margin-left: 5px;">
+</form>

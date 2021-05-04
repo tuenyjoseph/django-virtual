@@ -1,0 +1,16 @@
+{% extends 'core/core.html' %}
+{% block body %}
+<p class="text-center">Create a custom topic for set of blogs</p>
+<div class="row" id="link-row" style="min-height: 700px;">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 text-center">
+    <form id="customtopic-form" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="upload" value="Add Content" class="btn btn-primary btn-sm btn-test">
+        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary btn-sm btn-test">Cancel</a>
+    </form>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+{% endblock %}

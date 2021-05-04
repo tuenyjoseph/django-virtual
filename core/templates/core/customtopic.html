@@ -1,0 +1,70 @@
+{% extends 'core/core_.html' %}
+{% block body %}
+   <div class="row mt-2" style="min-height: 700px;">
+     <div class="col-md-6 mt-2" style="border-style: solid; border-color: #808080; border-width: thin;" id="append-ctopic">
+       <div>
+         <h5 class="text-center" style="color: #808080">{{ topic.name }}</h5>
+         <h6 class="text-center" style="color: #808080;">Please add blogs here</h6>
+         {% for obj in titles %}
+         <div class="row">
+            <div class="col-md-12" remove-customtopic-url="{% url 'core:titles_from_customtopic' obj.pk topic.pk %}">
+              <a href="" class="remove_title"><i class="material-icons">remove_circle</i></a>
+              <a href="{% url 'core:myblogdisplay' obj.pk %}" class="btn btn-link" style="text-decoration: none;">{{ obj.title }}</a>
+              {% if not obj.is_published %}
+              <a href="{% url 'core:blogpost' obj.pk %}" style="text-decoration: none;"><small style="color: red; text-decoration: none;">This blog is not published. Please edit and publish</small></a>
+              {% endif %}
+            </div>
+         </div>
+         {% endfor %}
+       </div>
+     </div>
+     <div class="col-md-6 mt-2" id="remove-ctopic" style="border-style: solid; border-color: #808080; border-width: thin;">
+       <div>
+         {% for obj in titlesall %}
+          <div class="row">
+            <div class="col-md-12" add-customtopic-url="{% url 'core:titles_to_customtopic' obj.pk topic.pk %}">
+              <a href="" class="add_title"><i class="material-icons">add_circle</i></a>
+              <a href="{% url 'core:myblogdisplay' obj.pk %}" class="btn btn-link">{{ obj.title }}</a><br>
+            </div>
+          </div>
+         {% endfor %}
+       </div>
+     </div>
+   </div>
+{% endblock %}
+{% block jsblock %}
+<script type="text/javascript">
+  $('.add_title').on('click', function(event){
+    event.preventDefault();
+    console.log('start');
+    var div = $(this).closest("div");
+    var row = $(this).closest(".row");
+    $.ajax({
+      url : div.attr("add-customtopic-url"),
+      type : "GET",
+      success : function(data) {
+        var app = $("#append-ctopic");
+        app.append(data.html_form);
+        row.remove();
+      }
+    })
+  });
+</script>
+<script type="text/javascript">
+  $('.remove_title').on('click', function(event){
+    event.preventDefault();
+    console.log('start');
+    var div = $(this).closest("div");
+    var row = $(this).closest(".row");
+    $.ajax({
+      url : div.attr("remove-customtopic-url"),
+      type : "GET",
+      success : function(data) {
+        var app = $("#remove-ctopic");
+        app.append(data.html_form);
+        row.remove();
+      }
+    })
+  });
+</script>
+{% endblock %}

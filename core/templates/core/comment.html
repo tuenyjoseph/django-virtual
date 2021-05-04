@@ -1,0 +1,36 @@
+
+    <p form-reply-url-js="{% url 'core:reply' pk %}" js-delete-comment-url-js="{% url 'core:delete_comment' pk %}" id="{{ pk }}">
+        <img src="{{ image.url }}" class="rounded-circle" style="width: 20px;">
+        {{ name }}<br>
+        <small>{{ comment }}</small><br>
+        <a href="" class="btn btn-sm btn-link js-delete-comment-parent-js" style="color: #808080;"><small>delete</small></a>
+    </p>
+
+<script type="text/javascript">
+    $(".js-delete-comment-parent-js").on('click', function(event){
+        event.preventDefault();
+        var p = $(this).closest("p");
+        $.ajax({
+            url: p.attr("js-delete-comment-url-js"),
+            type: "GET",
+            dataType: "json",
+            success: function(data){
+                p.remove()
+            }
+        })
+    })
+    $('.js-reply-parent-js').on('click', function(){
+        event.preventDefault();
+        $(".js-reply-remove").remove()
+        var p = $(this).closest("p");
+        $.ajax({
+            url:p.attr("form-reply-url-js"),
+            type: "GET",
+            dataType: "json",
+            success: function(data){
+                p.append(data.html_form)
+            }
+        })
+    })
+
+</script>

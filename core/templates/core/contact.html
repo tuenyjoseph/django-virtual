@@ -1,0 +1,27 @@
+{% extends 'core/bottomtemp.html' %}
+{% load staticfiles %}
+{% block static %}
+ <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body1 %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <p class="mt-4 text-center">Let us know your feedback or questions if you have any. We will get back to you as soon as possible.</p>
+        <form enctype="multipart/form-data" action="" method="Post" class="mt-4 text-center">
+            {% csrf_token %}
+            {% for field in form %}
+            <p>
+             {{ field.label_tag }}<br>
+             {{ field }}
+             {% for error in field.errors %}
+                <p style="color:red">{{ error }}</p>
+             {% endfor %}
+            </p>
+            {% endfor %}
+            <input type="submit" name="submit" value="Submit" class="btn btn-primary btn-sm btn-test" style="margin-bottom: 10px;">
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+{% endblock %}

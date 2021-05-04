@@ -1,0 +1,22 @@
+
+    <p js-delete-url-js="{% url 'core:delete_comment' new_pk %}" style="padding-left: 50px;">
+        <img src="{{ image.url }}" class="img-responsive rounded-circle" style="width: 20px;">
+        {{ name }}<br>
+        <small>{{ comment }}</small><br>
+        <a href="" class="btn btn-sm btn-link js-delete-comment-js" style="color: #808080;"><small>delete</small></a>
+    </p>
+<script type="text/javascript">
+       $(".js-delete-comment-js").click(function(event) {
+            event.preventDefault();
+            var p = $(this).closest("p");
+            $.ajax({
+               url : p.attr("js-delete-url-js"),
+               type : "GET",
+               data : jsonData,
+               dataType : "json",
+               success : function(data) {
+                   p.remove();
+               }
+            })
+        });
+   </script>

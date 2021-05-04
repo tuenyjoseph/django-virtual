@@ -1,0 +1,32 @@
+   <div style="margin-left: 50px;" class="js-reply-remove">
+     <form action="" form-reply-post="{% url 'core:reply' pk %}" method="post" pk="{{ pk }}" id="js-reply-post" class="class-js-post">
+      {% csrf_token %}
+      {% for field in form %}
+        <label for="{{ field.id_for_label }}"><small>Reply:</small></label><br>
+        {{ field }}
+      {% endfor %}
+      <input type="submit" name="post" value="Ok" class="thin btn btn-primary btn-sm btn-test" style="color: #ebf4fa;" id="js-reply-post-2">
+     </form>
+   </div>
+   <script type="text/javascript">
+       $(".class-js-post").submit(function(event) {
+           event.preventDefault();
+           var form = $(this).closest("form");
+           jsonData = {comment : $("#post-reply").val(), pk : form.attr("pk")};
+           $.ajax({
+               url : form.attr("form-reply-post"),
+               type : "POST",
+               data : jsonData,
+               dataType : "json",
+               success : function(data) {
+                  var comment = data.pk;
+                  console.log(data.pk)
+                  var div = $("#" + comment).closest("div");
+                  console.log(div)
+                  div.append(data.html_form);
+                  $(".js-reply-remove").remove();
+
+                }
+              })
+           });
+   </script>

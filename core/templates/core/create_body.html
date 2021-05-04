@@ -1,0 +1,9 @@
+{% extends 'core/core.html' %}
+{% block body %}
+         <form enctype="multipart/form-data" action="" method="Post" class="mt-4 text-center">
+              {% csrf_token %}
+              {{ form }}
+              <a href="{% url 'core:create_content' args %}" class="btn btn-primary btn-sm btn-test thin">Back</a>
+              <input type="submit" name="upload" value="Next" class="btn btn-primary btn-sm btn-test thin">
+          </form>
+{% endblock %}

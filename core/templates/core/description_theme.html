@@ -1,0 +1,332 @@
+{% extends 'core/core.html' %}
+{% block body %}
+    <div class="row mt-4">
+      <div class="col-md-4 text-center">
+        <h4 style="color: #808080;">Title Color</h4>
+        <a onclick="titleColorBlack(event)" href="" class="btn btn-primary btn-sm" style="background: black;"></a><a onclick="titleColorRed(event)" href="" class="btn btn-primary btn-sm" style="background: red;"></a><a onclick="titleColorBlue(event)" href="" class="btn btn-primary btn-sm" style="background: blue;"></a><a onclick="titleColorGreen(event)" href="" class="btn btn-primary btn-sm" style="background: green;"></a><a onclick="titleColorYellow(event)" href="" class="btn btn-primary btn-sm" style="background: yellow;"></a><a onclick="titleColorOrange(event)" href="" class="btn btn-primary btn-sm" style="background: orange;"></a><a href="" onclick="titleColorWhite(event)" class="btn btn-primary btn-sm" style="background: white;"></a>
+      </div>
+      <div class="col-md-4 text-center">
+          <h4 style="color: #808080;">Description Color</h4>
+          <a onclick="descColorBlack(event)" href="" class="btn btn-primary btn-sm" style="background: black;"></a><a onclick="descColorRed(event)" href="" class="btn btn-primary btn-sm" style="background: red;"></a><a onclick="descColorBlue(event)" href="" class="btn btn-primary btn-sm" style="background: blue;"></a><a onclick="descColorGreen(event)" href="" class="btn btn-primary btn-sm" style="background: green;"></a><a onclick="descColorYellow(event)" href="" class="btn btn-primary btn-sm" style="background: yellow;"></a><a onclick="descColorOrange(event)" href="" class="btn btn-primary btn-sm" style="background: orange;"></a><a onclick="descColorWhite(event)" class="btn btn-primary btn-sm" href="" style="background: white;"></a>
+      </div>
+       <div class="col-md-4 text-center">
+          <h4 style="color: #808080;">Background Color</h4>
+          <a onclick="coverColorBlack(event)" href="" class="btn btn-primary btn-sm" style="background: black;"></a><a onclick="coverColorRed(event)" href="" class="btn btn-primary btn-sm" style="background: red;"></a><a onclick="coverColorBlue(event)" href="" class="btn btn-primary btn-sm" style="background: blue;"></a><a onclick="coverColorGreen(event)" href="" class="btn btn-primary btn-sm" style="background: green;"></a><a onclick="coverColorYellow(event)" href="" class="btn btn-primary btn-sm" style="background: yellow;"></a><a onclick="coverColorOrange(event)" href="" class="btn btn-primary btn-sm" style="background: orange;"></a><a onclick="coverColorWhite(event)" class="btn btn-primary btn-sm" href="" style="background: white;"></a><a onclick="coverColorDefault(event)" href="" class="btn btn-primary btn-sm" style="background: #DCDCDC;"></a>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-8 text-center">
+        <h4 style="color: #808080;">Title Font</h4>
+        <div class="row">
+         <div class="col-md-6">
+          <h2><a onclick="titleFont1(event)" href="" style="font-family: Arial, Helvetica, sans-serif;">Title Font</a></h2>
+          <h2><a onclick="titleFont2(event)" href="" style="font-family: Impact, Charcoal, sans-serif;">Title Font</a></h2>
+          <h2><a onclick="titleFont3(event)" href="" style="font-family: Tahoma, Geneva, sans-serif;">Title Font</a></h2>
+          <h2><a onclick="titleFont4(event)" href="" style="font-family: Verdana, Geneva, sans-serif;">Title Font</a></h2>
+          <h2><a onclick="titleFont5(event)" href="" style="font-family: Monaco, monospace;">Title Font</a></h2>
+         </div>
+         <div class="col-md-6">
+          <h2><a onclick="titleFont6(event)" href="" style="font-family: Courier, monospace;">Title Font</a></h2>
+          <h2><a onclick="titleFont7(event)" href="" style="font-family: cursive, sans-serif;">Title Font</a></h2>
+          <h2><a onclick="titleFont8(event)" href="" style="font-family: Georgia, serif;">Title Font</a></h2>
+          <h2><a onclick="titleFont9(event)" href="" style="font-family: Times, serif;">Title Font</a></h2>
+          <h2><a onclick="titleFont10(event)" href="" style="font-family: 'Courier New', Courier, monospace;">Title Font</a></h2><br>
+         </div>
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+          <h4 style="color: #808080;">Description Font</h4>
+          <a onclick="descFont1(event)" href="" style="font-family: Arial, Helvetica, sans-serif;">Description Font</a><br>
+          <a onclick="descFont2(event)" href="" style="font-family: Impact, Charcoal, sans-serif;">Description Font</a><br>
+          <a onclick="descFont3(event)" href="" style="font-family: Tahoma, Geneva, sans-serif;">Description Font</a><br>
+          <a onclick="descFont4(event)" href="" style="font-family: Verdana, Geneva, sans-serif;">Description Font</a><br>
+          <a onclick="descFont5(event)" href="" style="font-family: Monaco, monospace;">Description Font</a><br>
+          <a onclick="descFont6(event)" href="" style="font-family: Courier, monospace;">Description Font</a><br>
+          <a onclick="descFont7(event)" href="" style="font-family: cursive, sans-serif;">Description Font</a><br>
+          <a onclick="descFont8(event)" href="" style="font-family: Georgia, serif;">Description Font</a><br>
+          <a onclick="descFont9(event)" href="" style="font-family: Times, serif;">Description Font</a><br>
+          <a onclick="descFont10(event)" href="" style="font-family: 'Courier New', Courier, monospace;">Description Font</a><br>
+      </div>
+    </div>
+    <div class="card mt-2 mb-3 text-center">
+      <div class="card-block">
+          {% if title.first_image %}
+          <blockquote class="card-blockquote" style="background-image: url({{ title.first_image.cover.url }}); height: 100%; background-size: cover; height: 510px; width: 100%;">
+              <h1 id="title_set" class="text-center title" slug="{{ title.slug }}" style="color: {{ title.titlesprop.title_color }}; font-family: {{ title.titlesprop.title_font }}"" pk="{{ title.pk }}">{{ title.title }}</h1>
+              <p id="desc_set" style="color: {{ title.titlesprop.description_color }}; font-family: {{ title.titlesprop.description_font }}">{{ title.description }}</p>
+          </blockquote>
+          {% else %}
+          <blockquote id="cover_id" class="card-blockquote" style="height: 100%; background-size: cover; height: 510px; width: 100%; background-color: {{ title.titlesprop.cover_color }};">
+              <h1 id="title_set" class="text-center title" slug="{{ title.slug }}" style="color: {{ title.titlesprop.title_color }}; font-family: {{ title.titlesprop.title_font }}"" pk="{{ title.pk }}">{{ title.title }}</h1>
+              <p id="desc_set" style="color: {{ title.titlesprop.description_color }}; font-family: {{ title.titlesprop.description_font }}">{{ title.description }}</p>
+          </blockquote>
+          {% endif %}
+      </div>
+    </div>
+    <form enctype="multipart/form-data" action="" method="Post" class="text-center" id="formUpload">
+        <div style="display: none;">
+              {% csrf_token %}
+              {{ form }}
+        </div>
+        <input type="submit" name="upload" value="Apply" class="btn btn-primary btn-sm btn-test">
+        <a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary btn-sm btn-test">Cancel</a>
+    </form>
+{% endblock %}
+{% block jsblock %}
+<script type="text/javascript">
+    function titleColorBlack(event) {
+       event.preventDefault();
+       var title = $("#title_set").css("color", 'black');
+       $("#id_title_color").val("black");
+    }
+
+    function titleColorBlue(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("color", 'blue');
+        $("#id_title_color").val("blue");
+    }
+
+    function titleColorRed(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("color", 'red');
+        $("#id_title_color").val("red");
+    }
+
+    function titleColorGreen(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("color", 'green');
+        $("#id_title_color").val("green");
+    }
+
+    function titleColorYellow(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("color", 'yellow');
+        $("#id_title_color").val("yellow");
+    }
+
+    function titleColorOrange(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("color", 'orange');
+        $("#id_title_color").val("orange");
+    }
+
+    function titleColorWhite(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("color", 'white');
+        $("#id_title_color").val("white");
+    }
+
+    function descColorBlack(event) {
+       event.preventDefault();
+       var title = $("#desc_set").css("color", 'black');
+       $("#id_title_color").val("white");
+       $("#id_description_color").val("black");
+    }
+
+    function descColorBlue(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'blue');
+        $("#id_description_color").val("blue");
+    }
+
+    function descColorRed(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'red');
+        $("#id_description_color").val("red");
+    }
+
+    function descColorGreen(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'green');
+        $("#id_description_color").val("green");
+    }
+
+    function descColorYellow(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'yellow');
+        $("#id_description_color").val("yellow");
+    }
+
+    function descColorOrange(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'orange');
+        $("#id_description_color").val("orange");
+    }
+
+    function descColorWhite(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'white');
+        $("#id_description_color").val("white");
+    }
+
+    function coverColorBlack(event) {
+       event.preventDefault();
+       var title = $("#cover_id").css("background-color", 'black');
+       $("#id_cover_color").val("black");
+    }
+
+    function coverColorBlue(event) {
+        event.preventDefault();
+        var title = $("#cover_id").css("background-color", 'blue');
+        $("#id_cover_color").val("blue");
+    }
+
+    function coverColorRed(event) {
+        event.preventDefault();
+        var title = $("#cover_id").css("background-color", 'red');
+        $("#id_cover_color").val("red");
+    }
+
+    function coverColorGreen(event) {
+        event.preventDefault();
+        var title = $("#cover_id").css("background-color", 'green');
+        $("#id_cover_color").val("green");
+    }
+
+    function coverColorYellow(event) {
+        event.preventDefault();
+        var title = $("#cover_id").css("background-color", 'yellow');
+        $("#id_cover_color").val("yellow");
+    }
+
+    function coverColorOrange(event) {
+        event.preventDefault();
+        var title = $("#cover_id").css("background-color", 'orange');
+        $("#id_cover_color").val("orange");
+    }
+
+    function coverColorWhite(event) {
+        event.preventDefault();
+        var title = $("#cover_id").css("background-color", 'white');
+        $("#id_cover_color").val("white");
+    }
+
+
+    function coverColorDefautl(event) {
+        event.preventDefault();
+        var title = $("#cover_id").css("background-color", '#DCDCDC');
+        $("#id_cover_color").val("#DCDCDC");
+    }
+
+    function titleFont1(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'Arial, Helvetica, sans-serif');
+        $("#id_title_font").val("Arial, Helvetica, sans-serif");
+    }
+
+    function titleFont2(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'Impact, Charcoal, sans-serif');
+        $("#id_title_font").val("Impact, Charcoal, sans-serif");
+    }
+
+    function titleFont3(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'Tahoma, Geneva, sans-serif');
+        $("#id_title_font").val("Tahoma, Geneva, sans-serif");
+    }
+
+    function titleFont4(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'Verdana, Geneva, sans-serif');
+        $("#id_title_font").val("Verdana, Geneva, sans-serif");
+    }
+
+    function titleFont5(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'Monaco, monospace');
+        $("#id_title_font").val("Monaco, monospace");
+    }
+
+    function titleFont6(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'Courier, monospace');
+        $("#id_title_font").val("Courier, monospace");
+    }
+
+    function titleFont7(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'cursive, sans-serif');
+        $("#id_title_font").val("cursive, sans-serif");
+    }
+
+    function titleFont8(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'Georgia, serif');
+        $("#id_title_font").val("Georgia, serif");
+    }
+
+    function titleFont9(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", 'Times, serif');
+        $("#id_title_font").val("Times, serif");
+    }
+
+    function titleFont10(event) {
+        event.preventDefault();
+        var title = $("#title_set").css("font-family", "'Courier New', Courier, monospace");
+        $("#id_title_font").val("'Courier New', Courier, monospace");
+    }
+
+    function descFont1(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Arial, Helvetica, sans-serif');
+        $("#id_description_font").val("Arial, Helvetica, sans-serif");
+    }
+
+    function descFont2(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Impact, Charcoal, sans-serif');
+        $("#id_description_font").val("Impact, Charcoal, sans-serif");
+    }
+
+    function descFont3(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Tahoma, Geneva, sans-serif');
+        $("#id_description_font").val("Tahoma, Geneva, sans-serif");
+    }
+
+    function descFont4(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Verdana, Geneva, sans-serif')
+        $("#id_description_font").val("Verdana, Geneva, sans-serif");
+    }
+
+    function descFont5(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Monaco, monospace');
+        $("#id_description_font").val("Monaco, monospace");
+    }
+
+    function descFont6(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Courier, monospace');
+        $("#id_description_font").val("Courier, monospace");
+    }
+
+    function descFont7(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'cursive, sans-serif');
+        $("#id_description_font").val("cursive, sans-serif");
+    }
+
+    function descFont8(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Georgia, serif');
+        $("#id_description_font").val("Georgia, serif");
+    }
+
+    function descFont9(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Times, serif');
+        $("#id_description_font").val("Times, serif");
+    }
+
+    function descFont10(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", "'Courier New', Courier, monospace");
+        $("#id_description_font").val("'Courier New', Courier, monospace");
+    }
+
+</script>
+{% endblock %}

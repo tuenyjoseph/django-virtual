@@ -1,0 +1,9 @@
+{% extends 'core/core.html' %}
+{% block body %}
+   <form enctype="multipart/form-data" method="post" class="mt-4 text-center">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" name="upload" value="Submit" class="mt-4 btn btn-primary btn-sm btn-test">
+      <a href="{{request.META.HTTP_REFERER}}" class="mt-4 btn btn-primary btn-sm btn-test">Cancel</a>
+   </form>
+{% endblock %}

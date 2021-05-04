@@ -1,0 +1,7 @@
+{% extends 'core/core.html' %}
+{% block body %}
+        <div style="padding-top: 100px; padding-left: 100px;">
+         <a href="{% url 'core:create_title' %}" class="mt-4 btn btn-link btn-border"><h4>Add a title to your blog</h4></a>
+         <a href="{{request.META.HTTP_REFERER}}" class="mt-4 btn btn-primary btn-sm btn-test">Cancel</a>
+        </div>
+{% endblock %}

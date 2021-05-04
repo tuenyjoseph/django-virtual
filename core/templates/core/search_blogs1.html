@@ -1,0 +1,96 @@
+{% extends 'core/basetemp.html' %}
+{% load staticfiles %}
+{% block static %}
+<link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block search %}
+  <div>
+   <div class="row" style="height: 60px;">
+     <div class="col-md-2" style=""></div>
+     <div class="col-md-8" style="margin-top: 10px;">
+       <div class="input-group" id="search-id" search-url-id="{% url 'core:search_blogs' %}">
+         <input type="text" id="search-res" class="form-control" placeholder="">
+         <span class="input-group-btn">
+           <button type="button" id="search-btn" style="font-size:24px;"><i class="fa fa-search" style="color: grey;"></i></button>
+         </span>
+       </div>
+       <div style="display: none;">
+         <form type="get" action="{% url 'core:search_blogs' %}"  style="margin: 0">
+          <input type="text" id="search-box" class="form-control" name="search-box" placeholder="">
+            <button type="submit" id="search-submit" style="font-size:24px;"><i class="fa fa-search" style="color: #488AC7;"></i></button>
+         </form>
+       </div>
+     </div>
+     <div class="col-md-2 mt-2"></div>
+   </div>
+  </div>
+{% endblock %}
+{% block body1 %}
+<div class="mt-2" style="" id="app-temp">
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="text-center">Search Results for <strong style="font-style: italic">{{ title }}</strong></h5>
+    </div>
+  </div>
+  {% if results %}
+  {% for obj in results %}
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <a href="{% url 'core:display' obj.user.slug obj.slug  %}" class="" style="text-decoration:none;">
+       <h6>{{ obj.title }}</h6>
+       <p style="color: black;"><small>{{ obj.description }}</small></p>
+      </a>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="row">
+    <div class="col-md-12">
+      <p class="text-center">No matching queries for your search</p>
+    </div>
+  </div>
+  {% endif %}
+  {% if results.has_other_pages %}
+  <div class="row">
+   <div class="col-md-1"></div>
+   <div class="col-md-10 text-center">
+    <ul class="pagination">
+    {% if results.has_previous %}
+      <li><a href="?page={{ results.previous_page_number }}&{{ title }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in results.paginator.page_range %}
+      {% if results.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if results.has_next %}
+      <li><a href="?page={{ results.next_page_number }}&{{ title }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+    </ul>
+   </div>
+   <div class="col-md-1"></div>
+  </div>
+  {% endif %}
+  {% endblock %}
+</div>
+{% block script %}
+<script type="text/javascript">
+      $('#search-btn').on('click', function(event){
+        event.preventDefault();
+        console.log('starting');
+        var search = $('#search-res').val();
+        $('#search-box').val(search);
+        $('#search-submit').click();
+      })
+</script>
+{% endblock %}
+
+

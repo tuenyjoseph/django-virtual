@@ -1,0 +1,112 @@
+{% extends 'core/basetemp.html' %}
+{% load staticfiles %}
+{% block static %}
+  <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block search %}
+<div class="row">
+     <div class="col-md-2"></div>
+     <div class="col-md-8" style="margin-top: 10px;">
+       <div class="input-group" id="search-id" search-url-id="{% url 'core:search_blogs' %}">
+         <input type="text" id="search-res" class="form-control" placeholder="">
+         <span class="input-group-btn">
+           <button type="button" id="search-btn" style="font-size:24px;"><i class="fa fa-search" style="color: grey;"></i></button>
+         </span>
+       </div>
+       <div style="display: none;">
+         <form type="get" action="{% url 'core:search_blogs' %}"  style="margin: 0">
+          <input type="text" id="search-box" class="form-control" name="search-box" placeholder="">
+            <button type="submit" id="search-submit" style="font-size:24px;"><i class="fa fa-search" style="color: #488AC7;"></i></button>
+         </form>
+       </div>
+       <div class="text-center" style="margin-top: 10px; margin-bottom: 10px;">
+         <a href="{% url 'core:profile' profile.slug %}" class="btn btn-link btn-test" style="text-decoration: none;"><small>{{ profile.first_name }}</small></a>
+         <a href="{% url 'core:blogs' profile.slug %}" class="btn btn-link btn-test" style="text-decoration: none;"><small>Blogs</small></a>
+         <a href="{% url 'core:more' profile.slug %}" class="btn btn-link btn-test" style="text-decoration: none;"><small>More</small></a>
+       </div>
+     </div>
+     <div class="col-md-2"></div>
+</div>
+{% endblock %}
+{% block body1 %}
+<div id="append-search"></div>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{ topic.name}}</h1>
+    <p class="lead">{{ topic.description }}</p>
+  </div>
+</div>
+{% if request.user == topic.user %}
+{% if count %}
+<div class="row">
+  <div class="col-md-12">
+    <h4 class="text-center" style="color: red">You have {{ count }} unpblished blogs in {{ topic.name }}<a href="{% url 'core:custom_topic' topic.pk %}" class="btn btn-primary btn-link" style="text-decoration: none;"><h4>Check out {{ topic.name }}</h4></a></h4>
+  </div>
+</div>
+{% endif %}
+<div class="row" id="subtopic_id">
+  <div class="col-md-12 text-center" view-function-link="{% url 'core:add_to_subtopic' topic.pk %}">
+     {% if subtopics %}
+     <h5>Add your topic to any of the below classifications if applicable</h5>
+     {% for topic in subtopics %}
+     <a href="" class="btn btn-link btn-test add_subtopic" slug="{{ topic.slug }}" style="text-decoration: none; margin: 5px">{{ topic.subtopic }}</a>
+     {% endfor %}
+     {% endif %}
+  </div>
+</div>
+{% endif %}
+<div class="row" style="min-height: 600px;">
+  <div class="col-md-12">
+   <div class="card-columns">
+        {% for obj in titles %}
+        <div class="card hover" style="padding: 20px; margin-top: 5px; margin-bottom: 5px;">
+          <a href="{% url 'core:display' obj.user.slug obj.slug %}" style="color: #808080; text-decoration:none;">
+            <div class="card-body text-center">
+              {% if obj.first_image %}
+              <div style="background-image: url({{ obj.first_image.cover.url }}); min-height: 100px;">
+                <h5 class="card-title" style="padding-top: 20px; color: {{ obj.titlesprop.title_color }}; font-family: {{ obj.titlesprop.title_font }}">{{ obj.title }}</h5>
+              </div>
+              {% else %}
+              <div style="min-height: 100px; background-color: {{ obj.titlesprop.cover_color }};">
+                <h5 class="card-title" style="padding-top: 20px; color: {{ obj.titlesprop.title_color }}; font-family: {{ obj.titlesprop.title_font }}">{{ obj.title }}</h5>
+              </div>
+              {% endif %}
+              <p class="card-text" style="text-align: justify-all; color: black; font-family: 'Assistant', sans-serif;"><font size="3">{{ obj.description }}</font></p>
+              <p class="card-text" style="color: #808080;"><small class="text-muted text-center"> ~<img class="rounded-circle" src="{{ obj.user.profile.image.url }}" style="width: 15px;">{{ obj.user.get_full_name }}</small></p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+   </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+      $('#search-btn').on('click', function(event){
+        event.preventDefault();
+        var search = $('#search-res').val();
+        if (search != '') {
+          $('#search-box').val(search);
+          $('#search-submit').click();
+        }
+      })
+</script>
+<script type="text/javascript">
+       $('.add_subtopic').on('click', function(event){
+        event.preventDefault();
+        var form = $(this).closest('div');
+        var slug = $(this).attr("slug");
+        jsonData = {slug : slug}
+        $.ajax({
+          url: form.attr("view-function-link"),
+          type: "POST",
+          data: jsonData,
+          dataType: "json",
+          success: function(data){
+             $('#subtopic_id').hide();
+          }
+        })
+       })
+</script>
+{% endblock %}

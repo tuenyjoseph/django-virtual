@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% block top-title %}
+<div class="row" style="background: #808080;">
+  <div class="col-md-12">
+     <h2 style="color: #ebf4fa; margin-bottom: 0px;" class="float-right">STREAMSOURCES</h2><br>
+  </div>
+</div>
+<div class="row" style="background: #808080;">
+  <div class="col-md-12">
+     {% if user.is_authenticated %}
+     <a href="{% url 'core:logout' %}" class="float-right thin btn btn-link btn-sm" style="margin-right: 4px; color: #ebf4fa;"><small>Logout</small></a>
+     {% endif %}
+     <a href="{% url 'core:desiderate' %}" class="float-right thin btn btn-link btn-sm" style="margin-right: 4px; color: #ebf4fa;"><small>Desiderate</small></a>
+     <a href="{% url 'core:home' %}" class="btn btn-link btn-sm float-right thin" style="color: #ebf4fa;"><small>Home</small></a>
+  </div>
+</div>
+{% endblock %}
+{% block body1 %}
+<div class="row mt-2">
+  <div class="col-md-12">
+    <h4 class="text-center" style="color: #808080;">{{ year }}-{{ month }}</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+   <div class="row">
+{% for blog in blogs %}
+    <div class="col-md-4 mb-4">
+      <div class="card mt-2" style="height: 300px;">
+        <img class="card-img-top img-fluid" src="{{ blog.cover.url }}" style="height: 100px;">
+        <div class="card-block">
+            <h4 class="card-title text-center">{{ blog.title }}</h4>
+            <p class="card-text">{{ blog.description|truncatechars:25 }}</p>
+            <div class="text-center"><a href="{% url 'core:display' blog.slug %}" class="btn btn-link" style="color: #808080; padding-top: 0px;">Read</a></div>
+        </div>
+      </div>
+    </div>
+{% endfor %}
+   </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'core/foundation.html' %}
+{% block body %}
+    <div class="row mt-4">
+      <div class="col-md-12 mt-4">
+        <form enctype="multipart/form-data" action="" method="post" class="text-center">
+          {% csrf_token %}
+          {{ form }} <br>
+          <input type="submit" name="edittitle" class="mt-2 text-center btn btn-primary btn-sm btn-test thin" value="Save Changes">
+          <a href="{% url 'core:edit_blog' args %}" class="mt-2 text-center btn btn-primary btn-sm btn-test thin">Back</a>
+        </form>
+      </div>
+    </div>
+
+{% endblock %}

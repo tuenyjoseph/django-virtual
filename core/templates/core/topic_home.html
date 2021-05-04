@@ -1,0 +1,48 @@
+{% extends 'core/basetemp.html' %}
+{% load staticfiles %}
+{% block static %}
+ <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body1 %}
+  <div class="row" style="height: 100px; background: #488AC7">
+     <div class="col-md-2" style=""></div>
+     <div class="col-md-8" style="margin-top: 10px;">
+       <div class="input-group">
+         <input type="text" class="form-control" placeholder="Search articles for {{ topic.topic }}">
+         <span class="input-group-btn">
+           <button type="button" style="font-size:24px;"><i class="fa fa-search" style="color: #808080;"></i></button>
+         </span>
+       </div>
+       <div class="btn-group-sm text-center">
+           <a href="{% url 'core:home' %}" class="btn btn-link btn-sm btn-test" style="text-decoration:none;">Home</a>
+           {% for topic in topics %}
+           <a href="{% url 'core:topic_home' topic.slug %}" class="btn btn-link btn-sm btn-test" style="text-decoration:none;">{{ topic.topic }}</a>
+           {% endfor %}
+       </div>
+     </div>
+     <div class="col-md-2 mt-2"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="text-center" style="color: #808080;">{{ topic.topic }}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-columns">
+        {% for obj in blogs %}
+        <div class="card">
+            <img src="{{ obj.cover.url }}" class="card-img-top img-fluid">
+            <div class="card-body mt-2 text-center">
+              <h5 class="card-title">{{ obj.title }}</h5>
+              <p class="card-text">{{ obj.description }}</p>
+              <a href="{% url 'core:display' obj.user.slug obj.slug %}" class="btn btn-link btn-sm" style="color:#808080;">Read</a>
+              <p class="card-text" style="color: #808080;"><small class="text-muted text-center"> ~{{ obj.user.get_full_name }}</small></p>
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

@@ -1,0 +1,160 @@
+{% extends 'core/core.html' %}
+{% block body %}
+    <div class="row">
+      <div class="col-md-12 text-center mt-4">
+        <a href="{% url 'core:add_quote' %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><h3>Add a quote</h3></a>
+        <a href="{% url 'core:usercover' %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><h3>Update cover photo</h3></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h2 style="color: #808080;">Choose Quote Color</h2>
+        <a onclick="titleColorBlack(event)" href="" class="btn btn-primary btn-sm" style="background: black;"></a><a onclick="titleColorRed(event)" href="" class="btn btn-primary btn-sm" style="background: red;"></a><a onclick="titleColorBlue(event)" href="" class="btn btn-primary btn-sm" style="background: blue;"></a><a onclick="titleColorGreen(event)" href="" class="btn btn-primary btn-sm" style="background: green;"></a><a onclick="titleColorYellow(event)" href="" class="btn btn-primary btn-sm" style="background: yellow;"></a><a onclick="titleColorOrange(event)" href="" class="btn btn-primary btn-sm" style="background: orange;"></a><a href="" onclick="titleColorWhite(event)" class="btn btn-primary btn-sm" style="background: white;"></a>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12 text-center">
+        <h2 style="color: #808080;">Choose Quote Font</h2>
+        <div class="row">
+         <div class="col-md-6">
+          <h2><a onclick="titleFont1(event)" href="" style="font-family: Arial, Helvetica, sans-serif;">Quote Font</a></h2>
+          <h2><a onclick="titleFont2(event)" href="" style="font-family: Impact, Charcoal, sans-serif;">Quote Font</a></h2>
+          <h2><a onclick="titleFont3(event)" href="" style="font-family: Tahoma, Geneva, sans-serif;">Quote Font</a></h2>
+          <h2><a onclick="titleFont4(event)" href="" style="font-family: Verdana, Geneva, sans-serif;">Quote Font</a></h2>
+          <h2><a onclick="titleFont5(event)" href="" style="font-family: Monaco, monospace;">Quote Font</a></h2>
+         </div>
+         <div class="col-md-6">
+          <h2><a onclick="titleFont6(event)" href="" style="font-family: Courier, monospace;">Quote Font</a></h2>
+          <h2><a onclick="titleFont7(event)" href="" style="font-family: cursive, sans-serif;">Quote Font</a></h2>
+          <h2><a onclick="titleFont8(event)" href="" style="font-family: Georgia, serif;">Quote Font</a></h2>
+          <h2><a onclick="titleFont9(event)" href="" style="font-family: Times, serif;">Quote Font</a></h2>
+          <h2><a onclick="titleFont10(event)" href="" style="font-family: 'Courier New', Courier, monospace;">Quote Font</a></h2><br>
+         </div>
+        </div>
+      </div>
+    </div>
+    {% if user.usercover_set %}
+    <div class="card mt-2 mb-3 text-center">
+      <div class="card-block">
+          <blockquote class="card-blockquote" style="background-image: url({{ user.usercover_set.all.0.cover.url }}); height: 100%; background-size: cover; height: 450px; width: 100%; background-position: center;">
+              <h3 id="desc_set" class="text-center title" style="color: {{ user.usertheme.description_color }}; font-family: {{ user.usertheme.description_font }}; padding-top: 100px;" >{{ user.usertheme.quote }}</h3>
+          </blockquote>
+      </div>
+    </div>
+    {% endif %}
+    <form enctype="multipart/form-data" action="" method="Post" class="text-center" id="formUpload">
+        <div style="display: none;">
+              {% csrf_token %}
+              {{ form }}
+        </div>
+        <input type="submit" name="upload" value="Apply" class="btn btn-primary btn-sm btn-test">
+        <a href="{% url 'core:profile' request.user.slug %}" class="btn btn-primary btn-sm btn-test">Cancel</a>
+    </form>
+{% endblock %}
+{% block jsblock %}
+<script type="text/javascript">
+    function titleColorBlack(event) {
+       event.preventDefault();
+       var title = $("#desc_set").css("color", 'black');
+       $("#id_description_color").val("black");
+    }
+
+    function titleColorBlue(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'blue');
+        $("#id_description_color").val("blue");
+    }
+
+    function titleColorRed(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'red');
+        $("#id_description_color").val("red");
+    }
+
+    function titleColorGreen(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'green');
+        $("#id_description_color").val("green");
+    }
+
+    function titleColorYellow(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'yellow');
+        $("#id_description_color").val("yellow");
+    }
+
+    function titleColorOrange(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'orange');
+        $("#id_description_color").val("orange");
+    }
+
+    function titleColorWhite(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("color", 'white');
+        $("#id_description_color").val("white");
+    }
+
+
+    function titleFont1(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Arial, Helvetica, sans-serif');
+        $("#id_description_font").val("Arial, Helvetica, sans-serif");
+    }
+
+    function titleFont2(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Impact, Charcoal, sans-serif');
+        $("#id_description_font").val("Impact, Charcoal, sans-serif");
+    }
+
+    function titleFont3(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Tahoma, Geneva, sans-serif');
+        $("#id_description_font").val("Tahoma, Geneva, sans-serif");
+    }
+
+    function titleFont4(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Verdana, Geneva, sans-serif')
+        $("#id_description_font").val("Verdana, Geneva, sans-serif");
+    }
+
+    function titleFont5(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Monaco, monospace');
+        $("#id_description_font").val("Monaco, monospace");
+    }
+
+    function titleFont6(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Courier, monospace');
+        $("#id_description_font").val("Courier, monospace");
+    }
+
+    function titleFont7(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'cursive, sans-serif');
+        $("#id_description_font").val("cursive, sans-serif");
+    }
+
+    function titleFont8(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Georgia, serif');
+        $("#id_description_font").val("Georgia, serif");
+    }
+
+    function titleFont9(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", 'Times, serif');
+        $("#id_description_font").val("Times, serif");
+    }
+
+    function titleFont10(event) {
+        event.preventDefault();
+        var title = $("#desc_set").css("font-family", "'Courier New', Courier, monospace");
+        $("#id_description_font").val("'Courier New', Courier, monospace");
+    }
+
+</script>
+{% endblock %}

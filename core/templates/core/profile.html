@@ -1,0 +1,209 @@
+{% extends 'core/foundation.html' %}
+{% load staticfiles %}
+{% block static %}
+  <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block search %}
+   {% if profile.profile.is_writer %}
+   <div class="row" style="">
+     <div class="col-md-2"></div>
+     <div class="col-md-8">
+       <div class="input-group" id="search-id" search-url-id="{% url 'core:search_blogs' %}">
+         <input type="text" id="search-res" class="form-control" placeholder="">
+         <span class="input-group-btn">
+           <button type="button" id="search-btn" style="font-size:24px;"><i class="fa fa-search" style="color: grey;"></i></button>
+         </span>
+       </div>
+       <div style="display: none;">
+         <form type="get" action="{% url 'core:search_blogs' %}"  style="margin: 0">
+          <input type="text" id="search-box" class="form-control" name="search-box" placeholder="">
+            <button type="submit" id="search-submit" style="font-size:24px;"><i class="fa fa-search" style="color: #488AC7;"></i></button>
+         </form>
+       </div>
+       <div class="text-center" style="margin-top: 10px; margin-bottom: 10px;">
+         <a href="{% url 'core:profile' profile.slug %}" class="btn btn-link btn-test" style="text-decoration: none;"><small>{{ profile.first_name }}</small></a>
+         <a href="{% url 'core:blogs' profile.slug %}" class="btn btn-link btn-test" style="text-decoration: none;"><small>Blogs</small></a>
+         <a href="{% url 'core:more' profile.slug %}" class="btn btn-link btn-test" style="text-decoration: none;"><small>More</small></a>
+       </div>
+     </div>
+     <div class="col-md-2"></div>
+   </div>
+{% endif %}
+{% endblock %}
+{% block body %}
+<div style="">
+  <div>
+   <div class="row" style="">
+     <div class="col-md-12 text-center">
+       {% if user.profile.is_writer and request.user == profile %}
+       <a href="{% url 'core:customtopic' %}" class="btn btn-primary btn-blank" id="link_id" style="text-decoration: none;"><small>Add topic</small></a>
+       <a href="{% url 'core:customtopics' %}" class="btn btn-primary btn-blank" id="link_id" style="text-decoration: none;"><small>My topics</small></a>
+       <a href="{% url 'core:myblogs' %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><small>My blogs</small></a>
+       <a href="{% url 'core:create_title' %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><small>Add blogs</small></a>
+       <a href="{% url 'core:user_theme' %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><small>Bio Theme</small></a>
+       {% endif %}
+       {% if user.email == 'tuenylukejoseph@gmail.com' and request.user == profile %}
+       <a href="{% url 'core:users' %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><small>All Users</small></a>
+       <a href="{% url 'core:allblogs' %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><small>All Blogs</small></a>
+       <a href="{% url 'core:topic' profile.slug %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><small>Create Admin Topic</small></a>
+       <a href="{% url 'core:subtopic' profile.slug %}" class="btn btn-primary btn-blank" style="text-decoration: none;"><small>Create Sub Topic</small></a>
+       {% endif %}
+     </div>
+   </div>
+  </div>
+  <div id="append-search"></div>
+   {% if profile.usercover_set.all.0 %}
+   <div class="row">
+    <div class="col-md-12">
+      <div class="card-block">
+          <blockquote class="card-blockquote" style="background-image: url({{ profile.usercover_set.all.0.cover.url }}); height: 100%; background-size: cover; height: 450px; width: 100%; background-position: center;">
+              <h3 id="desc_set" class="text-center title" style="color: {{ profile.usertheme.description_color }}; font-family: {{ profile.usertheme.description_font }}; padding-top: 100px;" >{{ profile.usertheme.quote }}</h3>
+          </blockquote>
+      </div>
+    </div>
+   </div>
+   {% endif %}
+   {% if user == profile %}
+   {% if count %}
+   <div class="row mt-4">
+     <div class="col-md-12">
+       <h4 class="text-center" style="color: red">You have {{ count }} unpblished blogs. Edit and publish them from<a href="{% url 'core:myblogs' %}" class="btn btn-primary btn-link" style="text-decoration: none;"><h4>My blogs</h4></a></h4>
+     </div>
+   </div>
+   {% endif %}
+   <div class="row mt-4">
+     <div class="col-md-12 mt-4">
+       <div class="text-center">
+         <img src="{{ profile.profile.image.url }}" class="img-thumbnail img-responsive" style="width: 20%;"><br>
+         <a href="{% url 'core:editpic' %}" style="color: #808080;"><small>Change</small></a>
+         {% if not profile.profile.image == 'profile/img.png' %}
+         <a href="{% url 'core:rempic' %}" style="color: #808080;"><small>Remove</small></a>
+         {% endif %}
+       </div>
+     </div>
+   </div>
+   <div class="row mt-4">
+       <div class="col-md-4">
+           <small>Name</small>
+       </div>
+       <div class="col-md-4 text-center">
+           <small>{{ profile.get_full_name }}</small>
+       </div>
+       <div class="col-md-4">
+           <a href="{% url 'core:editname' %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">edit</i></a>
+       </div>
+   </div>
+   <div class="row mt-4">
+       <div class="col-md-4">
+           <small>Email</small>
+       </div>
+       <div class="col-md-4 text-center">
+           <small>{{ profile.email }}</small>
+       </div>
+       <div class="col-md-4">
+           <small></small>
+       </div>
+   </div>
+   <div class="row mt-4">
+       <div class="col-md-4">
+           <small>Locaton</small>
+       </div>
+       <div class="col-md-4 text-center">
+           <small>{{ profile.profile.location }}</small>
+       </div>
+       <div class="col-md-4">
+           <a href="{% url 'core:editlocation' %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">edit</i></a>
+       </div>
+   </div>
+   <div class="row mt-4">
+       <div class="col-md-4">
+           <small>About Me</small>
+       </div>
+       <div class="col-md-4 text-center">
+           <small>{{ profile.profile.bio }}</small>
+       </div>
+       <div class="col-md-4 float-right">
+           <a href="{% url 'core:editbio' %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">edit</i></a>
+       </div>
+   </div>
+   {% for obj in profile.url_set.all %}
+   <div class="row mt-4">
+     <div class="col-md-4">
+       <small>{{ obj.url_name }}</small>
+     </div>
+     <div class="col-md-4 text-center"><a href="{{ obj.url }}">{{ obj.url }}</a></div>
+     <div class="col-md-4 float-right">
+       <a href="{% url 'core:deletelink' obj.pk %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">delete</i></a>
+       <a href="{% url 'core:editlink' obj.pk %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">edit</i></a>
+     </div>
+   </div>
+   {% endfor %}
+   <div class="row mt-4">
+     <div class="col-md-12 text-center">
+       <a href="{% url 'core:addlinks' %}" class="btn btn-primary btn-blank" style="">Add urls to the profile</a>
+       <a href="{% url 'core:change_password' %}" class="btn btn-primary btn-blank" style="">Change password</a>
+       {% if user.email == 'tuenylukejoseph@gmail.com' and request.user == profile %}
+       <a href="{% url 'core:approval_blogs' %}" class="btn btn-primary btn-blank" style="">Approval Blogs</a>
+       <a href="{% url 'core:manual_titlesprop' %}" class="btn btn-primary btn-blank" style="">Create Titlesprop</a>
+       {% endif %}
+     </div>
+   </div>
+   {% else %}
+   <div class="row mt-4">
+     <div class="col-md-12">
+       <div class="text-center"><img src="{{ profile.profile.image.url }}" class="img-responsive img-thumbnail" style="max-height: 250px; max-width: 250px;"></div>
+     </div>
+   </div>
+   <div class="row mt-2">
+     <div class="col-md-12">
+       <h3 class="text-center">{{ profile.get_full_name }}</h3>
+     </div>
+   </div>
+   <div class="row mt-2" style="min-height: 400px;">
+    <div class="col-md-2"></div>
+     <div class="col-md-8" style="">
+       <p class="text-center">{{ profile.profile.bio }}</p>
+       {% for obj in profile.url_set.all %}
+       <p class="text-center">{{ obj.url_name }} : <a href="{{ obj.url }}">{{ obj.url }}</a></p>
+       {% endfor %}
+     </div>
+     <div class="col-md-2"></div>
+   </div>
+      {% endif %}
+</div>
+{% endblock %}
+{% block modal %}
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+          <div class="loginmodal-container" style="background-color: #ebf4fa;" id="hidden_col_id">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+              </button>
+              <h1 style="color: #808080;">Sign In</h1>
+            <form action="" method="post" id="display-auth" login-authenticate-display-url="{% url 'core:authenticate_display'%}">
+              <div class="mt-4" style="color: #808080; padding-left: 5px;">
+                <input type="text" id="username" placeholder="Email Address" name="usrname" required><br>
+                <input type="password" placeholder="Password" id="password"><br>
+              </div>
+              <input type="submit" name="login" value="Sign In" class=" btn btn-primary mt-2 btn-test text-center" style="padding-left: 5px;padding-right: 5px; margin-left: 5px;">
+            </form>
+            <div class="login-help">
+              <a href="{% url 'core:signup' %}">Sign Up</a> - <a href="{% url 'core:password_reset' %}">Forgot Password</a>
+            </div>
+          </div>
+        </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'bootstrap/js/display.js' %}"></script>
+<script type="text/javascript">
+      $('#search-btn').on('click', function(event){
+        event.preventDefault();
+        var search = $('#search-res').val();
+        if (search != '') {
+          $('#search-box').val(search);
+          $('#search-submit').click();
+        }
+      })
+</script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'core/foundation.html' %}
+{% block body %}
+     <div class="row mt-4">
+        <div class="col-md-12 btn-group-sm text-center">
+          <a href="{% url 'core:home' %}" class="btn btn-primary btn-sm btn-test thin">Home</a>
+          <a href="{% url 'core:createcover' args %}" class="btn btn-primary btn-sm btn-test thin">CoverPhoto</a>
+          <a href="{% url 'core:create_subtitle' args %}" class="btn btn-primary btn-sm btn-test thin">Subtitles</a>
+          <a href="{% url 'core:create_body' args %}" class="btn btn-primary btn-sm btn-test thin">Body</a>
+          <a href="{% url 'core:create_pictures' args %}" class="btn btn-primary btn-sm btn-test thin">Pictures</a>
+          <a href="{% url 'core:picsettitle' args %}" class="btn btn-primary btn-sm btn-test thin">Picsets</a>
+        </div>
+     </div>
+<!--     <div class="row mt-4">
+         <div class="col-md-12">
+             <h2 class="text-center">{{ title.title }}</h2>
+         </div>
+     </div> -->
+     <div class="row mt-4">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" style="border-style: solid; border-color: #808080; border-width: thin;">
+             <div class="row">
+               <div class="col-md-9 text-center">
+                  <h3 class="mt-4">{{ title.title }}</h3>
+               </div>
+               <div class="text-center col-md-3 mt-4">
+                  <a href="{% url 'core:edit_title' args %}" class="btn btn-sm btn-link" style="color: #808080;">Edit</a>
+               </div>
+             </div>
+             {% for k in data %}
+             {% if k.subtitle %}
+             <div class="row mt-4">
+               <div class="col-md-9">
+                  <h5>{{ k.subtitle }}</h5>
+               </div>
+               <div class="text-center col-md-3">
+                   <a href="{% url 'core:edit_subtitle' args k.order %}" class="btn btn-sm btn-link" style="color: #808080;">Edit</a>
+                   <a href="{% url 'core:delete_confirm_subtitles' args k.order %}" class="btn btn-sm btn-link" style="color: #808080;">Delete</a>
+               </div>
+             </div>
+             {% elif k.body %}
+             <div class="row mt-4">
+               <div class="col-md-9">
+                   <p>{{ k.body }}</p>
+               </div>
+               <div class="col-md-3 text-center">
+                   <a href="{% url 'core:edit_body' args k.order %}" class="btn btn-sm btn-link" style="color: #808080;">Edit</a>
+                   <a href="{% url 'core:delete_confirm_body' args k.order %}" class="btn btn-sm btn-link" style="color: #808080;">Delete</a>
+               </div>
+             </div>
+             {% elif k.image %}
+             <div class="row mt-4">
+               <div class="col-md-9">
+                   <p class="text-center">
+                   <img src="{{ k.image.url }}" class="img-responsive" style="width:90%;"><br>
+                   <small>{{ k.description }}</small>
+                   </p>
+                </div>
+                <div class="col-md-3 text-center">
+                    <a href="{% url 'core:edit_pictures' args k.order %}" class="btn btn-sm btn-link" style="color: #808080;">Edit</a>
+                    <a href="{% url 'core:delete_confirm_pictures' args k.order %}" class="btn btn-sm btn-link" style="color: #808080;">Delete</a>
+                </div>
+             </div>
+             {% endif %}
+             {% endfor %}
+        </div>
+        <div class="col-md-1"></div>
+     </div>
+     <div class="row mt-4">
+         <div class="col-md-1"></div>
+         <div class="col-md-10 text-center">
+             {% if not title.is_published %}
+             <a href="{% url 'core:publish' args %}" class="btn btn-primary btn-sm btn-test">Publish</a>
+             {% else %}
+             <a href="{% url 'core:publish' args %}" class="btn btn-primary btn-sm btn-test">Hide</a>
+             {% endif %}
+         </div>
+         <div class="col-md-1"></div>
+     </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "core/tiny_base.html" %}
+{% block content %}
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h6 class="text-center" style="color: #808080;">***Please hit Publish button after creating the blog to be posted *** Please hit Publish button after editing the blog as well</h6>
+      <h6 style="color: #808080;" class="text-center">***Please hit the Save button at the bottom of the editor to save the contents***</h6>
+      <p> </p>
+    </div>
+  </div>
+  <div class="row form-error mt-4">
+    <div class="col-md-12" id="content">
+        <form method="post" id="post-tinymce" data-validate-username-url="{% url 'core:blogpost' pk %}" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <input type="submit" id="image_indic" class="btn btn-primary btn-test" value="save" name="">
+            <a id="image_indic_close" class="btn btn-primary btn-test" style="display: none;">Please wait as the image is being loaded</a>
+        </form>
+    </div>
+  </div>
+  <div class="row">
+   <div class="col-md-12">
+    <div id="append-pic" args= "{{ pk }}">
+      <iframe name="form_target" style="display: none;"></iframe>
+      <form action="" id="blog_pic_tiny" target="form_target" method="post" style="width: 0px; height: 0; overflow: hidden;" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form2 }}
+      </form>
+    </div>
+    <div id="append-coverphoto" cover-url="{% url 'core:createcover' pk %}">
+      <iframe name="form_target" style="display: none;"></iframe>
+      <form action="" id="cover_pic" target="cover_target" method="post" style="width: 0px; height: 0; overflow: hidden;" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form3 }}
+      </form>
+    </div>
+   </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $("#ajax-coverphoto-id").on('click', function(event){
+       event.preventDefault();
+       $("#id_cover").click();
+       $("#id_cover").change(function() {
+         var form = $("#cover_pic")
+         formData = new FormData(form[0]);
+         var div = $("#append-coverphoto")
+         $.ajax({
+           url: div.attr('cover-url'),
+           data: formData,
+           processData: false,
+           contentType: false,
+           type: 'POST',
+           success: function(data){
+           }
+         })
+       });
+    })
+</script>
+{% endblock %}
+
+

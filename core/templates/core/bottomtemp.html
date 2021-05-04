@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     {% block meta %} {% endblock %}
+     <title>{% block title %}Thoughtsofminds{% endblock %}</title>
+     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+     <link href="{% static 'bootstrap/css/style.css' %}" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+     {% block static %}
+     {% endblock %}
+  </head>
+  <body>
+    <div id="">
+     <div id="main" class="container-fluid clear-top">
+      <div class="fixed-top">
+       <div class="row" style="background: #f5f5f5;">
+         <div class="col-md-12" style="margin-bottom: 10px;">
+           <h2 class="float-left mt-1" style="margin-bottom: 0px; font-family: 'Bungee', cursive;">THOUGHTSOFMINDS</h2>
+         </div>
+       </div>
+       {% block search %}
+       {% endblock %}
+       <div class="row" style="min-height: 40px; background: #f5f5f5;">
+         <div class="col-md-12 float-right" style="margin-bottom: 10px;">
+            {% if user.is_authenticated %}
+             <a href="{% url 'core:logout' %}" class="float-right btn btn-sm btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><i class="fa fa-sign-out" style="color: black; font-size:24px;"></i></a>
+             <a href="{% url 'core:profile' request.user.slug %}" class="float-right btn btn-sm btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><img class="" src="{{ user.profile.image.url }}" style="width: 24px;"></a>
+             <a href="{% url 'core:writers' %}" class="float-right btn btn-sm btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><i class="fa fa-users" style="color: black; font-size:23px;"></i></a>
+             <a href="{% url 'core:alltopics' %}" class="float-right btn btn-sm btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><i class="fa fa-plus" style="color: black; font-size:23px;"></i></a>
+             <a href="{% url 'core:home' %}" class="float-right btn btn-sm btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><i class="fa fa-home" style="color: black; font-size:24px;"></i></a>
+            {% else %}
+             <a href="" id="login-modal-link" class="btn btn-sm float-right btn-nav" data-toggle="modal" data-target="#login-modal" style="color: #ebf4fa; margin-right: 4px; text-decoration:none;"><i class="fa fa-sign-in" style="color: black; font-size:24px;"></i></a>
+             <a href="{% url 'core:signup' %}" class="btn btn-sm float-right btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><i class="fa fa-user-plus" style="color: black; font-size:24px;"></i></a>
+             <a href="{% url 'core:writers' %}" class="float-right btn btn-sm btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><i class="fa fa-users" style="color: black; font-size:23px;"></i></a>
+             <a href="{% url 'core:alltopics' %}" class="float-right btn btn-sm btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><i class="fa fa-plus" style="color: black; font-size:23px;"></i></a>
+             <a href="{% url 'core:home' %}" class="float-right btn btn-sm btn-nav" style="margin-right: 4px; color: #ebf4fa; text-decoration:none;"><i class="fa fa-home" style="color: black; font-size:24px;"></i></a>
+            {% endif %}
+         </div>
+       </div>
+      </div>
+      <div style="margin-top: 90px;">
+       {% block body1 %}
+       {% endblock %}
+      </div>
+    </div>
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+          <div class="loginmodal-container" style="background-color: #ebf4fa;" id="hidden_col_id">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+              </button>
+              <h1 style="color: #488AC7;">Sign In</h1>
+            <form action="" method="post" id="display-auth" login-authenticate-display-url="{% url 'core:authenticate_display'%}">
+              <div class="mt-4" style="color: #808080; padding-left: 5px;">
+                <input type="text" id="username" placeholder="Email Address" name="usrname" required><br>
+                <input type="password" placeholder="Password" id="password"><br>
+              </div>
+              <input type="submit" name="login" value="Sign In" class=" btn btn-primary mt-2 btn-test text-center" style="padding-left: 5px;padding-right: 5px; margin-left: 5px;">
+            </form>
+            <div class="login-help">
+              <a href="{% url 'core:signup' %}" style="color: blue;">Sign Up</a> - <a style="color: blue;" href="{% url 'core:password_reset' %}">Forgot Password</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="footer mt-2">
+       <div class="row">
+         <div class="col-md-12" style="padding-top: 20px;">
+           <a href="{% url 'core:about_us' %}" class="btn btn-sm btn-link thin" style="color: #ebf4fa;">| About Us |</a>
+           <a href="{% url 'core:privacy_policy' %}" class="btn btn-sm btn-link thin" style="color: #ebf4fa;">Privacy Policy |</a>
+           <a href="{% url 'core:contact' %}" class="btn btn-sm btn-link thin" style="color: #ebf4fa;">Contact |</a>
+           <a href="{% url 'core:terms_conditions' %}" class="btn btn-sm btn-link thin" style="color: #ebf4fa;">Terms and Conditions |</a>
+         </div>
+       </div>
+    </div>
+    <script type="text/javascript" src="{% static 'bootstrap/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/tether.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/display.js' %}"></script>
+    <script type="text/javascript">
+  /*
+      $('#login-comment').on('submit', function(event){
+           event.preventDefault();
+           var form = $(this).closest("form");
+           $("#login-error-p").remove();
+           jsonData = {email : $('#usrname').val(), password : $('#pword').val()};
+           $.ajax({
+              url: form.attr("login-authenticate-url"),
+              type: "POST",
+//              data: JSON.stringify(jsonData),
+              data: jsonData,
+              dataType: "json",
+              success: function(data){
+                if (data.success == 'yes')
+                  {
+                    window.location.reload();
+                    $("#id_comment").focus();
+                  } else {
+                      console.log(data.message);
+                      $("#login-error").append(data.html_form);
+
+                  }
+                  }
+            })
+        }); */
+    </script>
+    {% block script %} {% endblock %}
+  </body>
+</html>

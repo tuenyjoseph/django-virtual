@@ -1,0 +1,15 @@
+{% extends 'core/foundation.html' %}
+{% block body %}
+<div class="row mt-4" style="min-height: 680px;" id="link-row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <form id="link-form" method="POST" class="text-center">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="upload" value="Submit" class="btn btn-primary btn-sm btn-test">
+        <a href="{% url 'core:profile' user.slug %}" class="btn btn-primary btn-sm btn-test">Cancel</a>
+    </form>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+{% endblock %}

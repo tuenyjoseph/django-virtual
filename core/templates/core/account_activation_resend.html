@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% block topright2 %}
+{% endblock %}
+{% block body %}
+<div class="row" style="min-height: 700px;">
+ <div class="col-md-3 mt-4"></div>
+ <div class="col-md-6 mt-4 text-center" style="background-color: #ebf4fa; margin-left: 30px; margin-right: 30px; padding-bottom: 10px;">
+  <h4 class="mt-4">Enter your email address</h4>
+  <form action="" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      <p>
+          {{ field.label_tag }}
+          {{ field }}
+          {% for error in field.errors %}
+             <p style="color:red">{{ error }}</p>
+          {% endfor %}
+      </p>
+      {% endfor %}
+      <input type="submit" name="signup" class="btn btn-primary btn-sm btn-test"  value="Submit">
+      <a href="{% url 'core:home' %}" class="btn btn-test btn-primary btn-sm">Cancel</a>
+  </form>
+ </div>
+ <div class="col-md-3 mt-4"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+<div class="mt-2" style="border-style: solid; border-color: #808080; border-width: thin;" id="app-temp">
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="text-center">Search Results<span class="float-right"><i class="fa fa-window-close" id="search-close-id" style="color: #488AC7;"></i></span></h5>
+    </div>
+  </div>
+  {% if titles %}
+  {% for obj in titles %}
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{% url 'core:display' obj.user.slug obj.slug  %}" class="" style="text-decoration:none;">
+       <h6>{{ obj.title }}</h6>
+       <p style="color: black;"><small>{{ obj.description }}</small></p>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="row">
+    <div class="col-md-12">
+      <p>No matching queries for your search</p>
+    </div>
+  </div>
+  {% endif %}
+</div>
+<script type="text/javascript">
+      $('#search-close-id').on('click', function(event){
+        event.preventDefault();
+        $('#search-res').val('');
+        $("#app-temp").remove();
+      })
+</script>
+
+

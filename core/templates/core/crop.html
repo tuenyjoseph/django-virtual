@@ -1,0 +1,27 @@
+{% load static %}
+  <head>
+      <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'bootstrap/css/cropper.min.css' %}" rel="stylesheet">
+      <link href="{% static 'bootstrap/css/style.css' %}" rel="stylesheet">
+  </head>
+  <body>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12" style="background: #488AC7;">
+            <h2 class="float-right" style="color: #ebf4fa; font-family: Courier, monospace;">THOUGHTSOFMINDS</h2>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-12 mt-4 text-center">
+          {% block content %}
+          {% endblock %}
+          </div>
+        </div>
+      </div>
+      <script src="{% static 'bootstrap/js/tether.min.js' %}"></script>
+      <script src="{% static 'bootstrap/js/jquery-3.2.1.min.js' %}"></script>
+      <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'bootstrap/js/cropper.js' %}"></script>
+      {% block javascript %}
+      {% endblock %}
+

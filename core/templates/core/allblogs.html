@@ -1,0 +1,16 @@
+{% extends 'core/core.html' %}
+{% block body %}
+{% if user.email == 'tuenylukejoseph@gmail.com' %}
+<div class="row mt-4">
+    {% for blog in blogs %}
+    <div class="col-md-4" style="border-color: #808080; border-style: solid;">
+        <p>{{ blog.title }} <br>
+        is_published: {{ blog.is_published }}<br>
+        Total views: {{ blog.total_views }}<br>
+        Authenticated views: {{ blog.authenticated_views }}<br>
+        user: {{ blog.user.email }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

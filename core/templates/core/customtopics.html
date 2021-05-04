@@ -1,0 +1,13 @@
+{% extends 'core/core_.html' %}
+{% block body %}
+   <div class="row mt-2" style="min-height: 700px;">
+     <div class="col-md-12 mt-2 text-center">
+       <div style="border-style: solid; border-color: #808080; border-width: thin;">
+         <h5 class="text-center" style="color: #808080">My Custom Topics</h5>
+         {% for obj in topics %}
+            <a href="{% url 'core:custom_topic' obj.pk %}" class="btn btn-link">{{ obj.name }}</a><br>
+         {% endfor %}
+       </div>
+     </div>
+   </div>
+{% endblock %}

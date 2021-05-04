@@ -1,0 +1,12 @@
+{% extends 'core/core.html' %}
+{% block body %}
+{% if user.email == 'tuenylukejoseph@gmail.com' %}
+<div class="row mt-4">
+    <div class="col-md-12" style="border-color: #808080; border-style: solid;">\
+      {% for blog in blogs %}
+      <a href="{% url 'core:approval_display' blog.pk %}" class="btn btn-sm btn-link thin">{{ blog.title }}</a><br>
+      {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

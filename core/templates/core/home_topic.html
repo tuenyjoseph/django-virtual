@@ -1,0 +1,109 @@
+{% extends 'core/basetemp.html' %}
+{% load staticfiles %}
+{% block static %}
+ <link href="{% static 'bootstrap/css/signin.css' %}" rel="stylesheet">
+{% endblock %}
+{% block search %}
+  <div>
+   <div class="row" style="height: 100px;">
+     <div class="col-md-2" style=""></div>
+     <div class="col-md-8" style="margin-top: 10px;">
+       <div class="input-group" id="search-id" search-url-id="{% url 'core:search_blogs' %}">
+         <input type="text" id="search-res" class="form-control" placeholder="">
+         <span class="input-group-btn">
+           <button type="button" id="search-btn" style="font-size:22px;"><i class="fa fa-search" style="color: grey;"></i></button>
+         </span>
+       </div>
+       <div style="display: none;">
+         <form type="get" action="{% url 'core:search_blogs' %}"  style="margin: 0">
+          <input type="text" id="search-box" class="form-control" name="search-box" placeholder="">
+            <button type="submit" id="search-submit" style="font-size:24px;"><i class="fa fa-search" style="color: #488AC7;"></i></button>
+         </form>
+       </div>
+       <div class="text-center" style="margin-top: 10px; margin-bottom: 10px;">
+         <a href="" class="btn btn-link btn-test" style="text-decoration: none;"><small>{{ topic.topic }}</small></a>
+         <a href="{% url 'core:topic_more' topic.slug %}" class="btn btn-link btn-test" style="text-decoration: none;"><small>More</small></a>
+       </div>
+     </div>
+     <div class="col-md-2 mt-2"></div>
+   </div>
+  </div>
+{% endblock %}
+{% block body1 %}
+  <div id="append-search"></div>
+  <div class="jumbotron jumbotron-fluid" style="margin-top: 20px;">
+    <div class="container">
+      <h1 class="display-4">{{ blogdata.0.title }}</h1>
+      <p class="lead">{{ blogdata.0.description }}</p>
+      <a href="{% url 'core:display' blogdata.0.user.slug blogdata.0.slug %}" style="color: #808080; text-decoration:none;" class="btn btn-nav">Read More</a>
+    </div>
+  </div>
+  <div style="min-height: 650px;">
+   <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card-columns infinite-container">
+        {% for obj in blogdata %}
+        <div class="card hover infinite-item" style="margin-top: 5px; margin-bottom: 5px; padding: 20px;">
+          <a href="{% url 'core:display' obj.user.slug obj.slug %}" style="color: #808080; text-decoration:none;">
+            <div class="card-body text-center">
+              {% if obj.first_image %}
+              <div style="background-image: url({{ obj.first_image.cover.url }}); min-height: 100px;">
+                <h5 class="card-title" style="padding-top: 20px; color: {{ obj.titlesprop.title_color }}; font-family: {{ obj.titlesprop.title_font }}">{{ obj.title }}</h5>
+              </div>
+              {% else %}
+              <div style="min-height: 100px; background-color: {{ obj.titlesprop.cover_color }}">
+                <h5 class="card-title" style="padding-top: 20px; color: {{ obj.titlesprop.title_color }}; font-family: {{ obj.titlesprop.title_font }}">{{ obj.title }}</h5>
+              </div>
+              {% endif %}
+              <p class="card-text" style="text-align: justify-all; color: black; font-family: 'Assistant', sans-serif;"><font size="3">{{ obj.description }}</font></p>
+              <p class="card-text" style="color: #808080;"><small class="text-muted text-center"> ~<img class="rounded-circle" src="{{ obj.user.profile.image.url }}" style="width: 15px;">{{ obj.user.get_full_name }}</small></p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+   </div>
+   <div class="row">
+       <div class="col-md-12 text-center">
+           {% if blogdata.has_next %}
+          <a class="infinite-more-link" href="?page={{ blogdata.next_page_number }}">More</a>
+          {% endif %}
+       </div>
+   </div>
+   <div class="row">
+       <div class="col-md-12">
+           <div class="loading" style="display: none;">
+              Loading...
+           </div>
+       </div>
+   </div>
+  </div>
+{% endblock %}
+{% block script %}
+  <script src="{% static 'bootstrap/js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'bootstrap/js/infinite.js' %}"></script>
+  <script type="text/javascript">
+      $('#search-btn').on('click', function(event){
+        event.preventDefault();
+        var search = $('#search-res').val();
+        if (search != '') {
+          $('#search-box').val(search);
+          $('#search-submit').click();
+        }
+      })
+  </script>
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+{% endblock %}
+
+

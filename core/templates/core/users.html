@@ -1,0 +1,38 @@
+{% extends 'core/core.html' %}
+{% block bodyleft %}
+<div class="mt-4 text-center"><h4>{{ count }}<h4></div>
+{% endblock %}
+{% block body %}
+{% for bloger in users %}
+<div class="row">
+  <div class="col-md-2 mt-4">
+  {% if bloger.profile.image %}
+    <img src="{{ bloger.profile.image.url }}" class="img-thumbnail img-responsive" style="width: 20%;">
+  {% endif %}
+  </div>
+  <div class="col-md-2 mt-4">
+   {{ bloger.get_full_name }}
+  </div>
+  <div class="col-md-2 mt-4 js-active" is-writer-url="{% url 'core:writer' bloger.pk %}">
+     <a href="" class="btn btn-link btn-sm js-is-writer" style="color: #808080;">
+     {% if not bloger.profile.is_writer %}
+     Activate is_writer
+     {% else %}
+     De-activate is_writer
+     {% endif %}
+     </a>
+  </div>
+  <div class="col-md-2 mt-3 writer-not-writer">
+  {% if bloger.profile.is_writer %}
+       Writer
+  {% else %}
+       Not writer
+  {% endif %}
+  </div>
+  <div class="col-md-3 mt-4">
+   {{ bloger.email }}
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
+

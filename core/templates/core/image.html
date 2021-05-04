@@ -1,0 +1,8 @@
+{% extends 'core/core.html' %}
+{% block body %}
+   <form enctype="multipart/form-data" method="post" class="mt-4 text-center">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" name="upload" value="Submit" class="btn btn-primary btn-sm btn-test">
+   </form>
+{% endblock %}

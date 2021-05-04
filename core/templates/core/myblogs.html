@@ -1,0 +1,43 @@
+{% extends 'core/core_.html' %}
+{% block body %}
+   <div class="row mt-2" style="min-height: 700px;">
+     <div class="col-md-6 mt-2">
+       <div style="border-style: solid; border-color: #808080; border-width: thin;">
+         <h5 class="text-center" style="color: #808080">My Published Blogs</h5>
+         <h6 class="text-center" style="color: #808080;">Please click on edit icon to edit the blog</h6>
+         {% for blog in blogs_t %}
+         <div class="row">
+           <div class="col-md-10">
+              <a class="text-center" href="{% url 'core:myblogdisplay' blog.pk %}">{{ blog.title }}</a>
+           </div>
+           <div class="col-md-1">
+              <a href="{% url 'core:blogpost' blog.pk %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">edit</i></a>
+           </div>
+           <div class="col-md-1">
+              <a href="{% url 'core:deleteconfirmblog' blog.pk %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">delete</i></a>
+           </div>
+         </div>
+         {% endfor %}
+       </div>
+     </div>
+     <div class="col-md-6 mt-2">
+       <div style="border-style: solid; border-color: #808080; border-width: thin;">
+         <h5 class="text-center" style="color: #808080">My Unpublished Blogs</h5>
+         <h6 class="text-center" style="color: #808080;">Please click on edit icon to edit and publish the blog</h6>
+         {% for blog in blogs_f %}
+         <div class="row">
+           <div class="col-md-10">
+              <a class="text-center" href="{% url 'core:myblogdisplay' blog.pk %}">{{ blog.title }}</a>
+           </div>
+           <div class="col-md-1">
+              <a href="{% url 'core:blogpost' blog.pk %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">edit</i></a>
+           </div>
+           <div class="col-md-1">
+              <a href="{% url 'core:deleteconfirmblog' blog.pk %}" class="float-right"><i class="material-icons" style="font-size: 18px; color: #808080;">delete</i></a>
+           </div>
+         </div>
+         {% endfor %}
+       </div>
+     </div>
+   </div>
+{% endblock %}

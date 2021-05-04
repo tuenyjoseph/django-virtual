@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% block topright2 %}
+{% endblock %}
+{% block body %}
+<div class="row" style="min-height: 700px;">
+ <div class="col-md-3 mt-4"></div>
+ <div class="col-md-6 mt-4 text-center" style="background-color: #ebf4fa; margin-left: 30px; margin-right: 30px; padding-bottom: 10px;">
+  <h4 class="mt-4">Sign Up</h4>
+  <form action="" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      <p>
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% for error in field.errors %}
+             <p style="color:red">{{ error }}</p>
+             {% if reactivate == 'yes' and error == 'User with this Email address already exists.' %}
+             <a href="{% url 'core:resend_link' %}"><b>Click here to resend Activation Link and activate your account</b></a>
+             {% endif %}
+          {% endfor %}
+      </p>
+      {% endfor %}
+      <input type="submit" name="signup" class="btn btn-primary btn-sm btn-test"  value="Submit">
+      <a href="{% url 'core:home' %}" class="btn btn-test btn-primary btn-sm">Cancel</a>
+  </form>
+ </div>
+ <div class="col-md-3 mt-4"></div>
+</div>
+{% endblock %}
